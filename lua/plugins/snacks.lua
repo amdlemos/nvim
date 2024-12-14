@@ -3,15 +3,12 @@ return {
   priority = 1000,
   lazy = false,
   opts = {
-    -- your configuration comes here
-    -- or leave it empty to use the default settings
-    -- refer to the configuration section below
     animate = { enabled = false },
     bigfile = { enabled = false },
-    dashboard = { enabled = false },
+    dashboard = { enabled = true },
     debug = { enabled = true },
     dim = { enabled = true },
-    git = { enabled = true },
+    git = { enabled = false },
     gitbrowse = { false },
     indent = { enabled = true },
     input = { enabled = true },
@@ -24,7 +21,7 @@ return {
     scope = { enabled = false },
     scratch = { enabled = false },
     scroll = { enabled = false },
-    statuscolumn = { enabled = true },
+    statuscolumn = { enabled = false },
     terminal = { enabled = true },
     toggle = { enabled = true },
     util = { enabled = true },

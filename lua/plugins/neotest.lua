@@ -1,8 +1,6 @@
-if true then
-  return {}
-end
 return {
   "nvim-neotest/neotest",
+  enabled = true,
   dependencies = {
     "nvim-neotest/nvim-nio",
     "nvim-lua/plenary.nvim",
@@ -21,24 +19,16 @@ return {
       },
       adapters = {
         require("neotest-pest")({
-          -- sail_executable = "vendor/bin/sail",
-          -- sail_project_path = "./",
-          -- sail_enabled = true,
-          -- pest_cmd = "vendor/bin/pest",
-          -- results_path = function()
-          --   return "storage/app/" .. os.date("junit-%Y%m%d-%H%M%S")
-          -- end,
-          --
-          -- root_files = { ".git" }
         }),
       },
     })
-
-    vim.keymap.set("n", "<leader>nn", function()
-      require("neotest").run.run()
-    end)
-    vim.keymap.set("n", "<leader>nd", function()
-      require("neotest").run.run({ strategy = "dap" })
-    end)
   end,
+  keys = {
+    { "<leader>t", "", desc = "Tests" },
+    { "<leader>tn", function() require("neotest").run.run() end, desc = "Run the nearest test" },
+    { "<leader>ta", function() require("neotest").run.run(vim.fn.getcwd()) end, desc = "Run all tests (tests fail)" },
+    { "<leader>tf", function() require("neotest").run.run(vim.fn.expand("%")) end, desc = "Run the current file" },
+    { "<leader>ts", "<cmd>Neotest summary open<cr>", desc = "Displays test suite structure" },
+    { "<leader>to", "<cmd>Neotest output-panel toggle<cr>", desc = "Toggle output panel" },
+  }
 }
