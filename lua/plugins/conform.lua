@@ -3,6 +3,7 @@ if true then
 end
 return {
   "stevearc/conform.nvim",
+  enabled = false,
   config = function()
     local util = require("conform.util")
     require("conform").setup({
@@ -12,37 +13,37 @@ return {
         yaml = { "prettier" },
         php = {
           "pint",
-          -- "php_cs_fixer",
-          -- "phpcbf",
+          "php_cs_fixer",
+          "phpcbf",
           stop_after_first = true,
         },
-        css = { "prettied", "prettier", stop_after_first = true },
-        graphql = { "prettied", "prettier", stop_after_first = true },
-        html = { "prettied", "prettier", stop_after_first = true },
-        javascript = { "prettied", "prettier", stop_after_first = true },
-        javascriptreact = { "prettied", "prettier", stop_after_first = true },
-        json = { "prettied", "prettier", stop_after_first = true },
-        markdown = { "prettied", "prettier", stop_after_first = true },
-        python = { "isort", "black", stop_after_first = true },
-        sql = { "sql-formatter" },
-        svelte = { "prettied", "prettier", stop_after_first = true },
+        css = { "prettierd", "prettier", stop_after_first = true },
+        graphql = { "prettierd", "prettier", stop_after_first = true },
+        html = { "prettierd", "prettier", stop_after_first = true },
+        javascript = { "prettierd", "prettier", stop_after_first = true },
+        javascriptreact = { "prettierd", "prettier", stop_after_first = true },
+        json = { "prettierd", "prettier", stop_after_first = true },
+        markdown = { "prettierd", "prettier", stop_after_first = true },
+        -- python = { "isort", "black", stop_after_first = true },
+        -- sql = { "sql-formatter" },
+        svelte = { "prettierd", "prettier", stop_after_first = true },
         typescript = {
-          "prettied",
+          "prettierd",
           "prettier",
-          "sql-formatter",
+          -- "sql-formatter",
           stop_after_first = true,
         },
-        typescriptreact = { "prettied", "prettier", stop_after_first = true },
+        typescriptreact = { "prettierd", "prettier", stop_after_first = true },
         yaml = { "prettier" },
       },
       formatters = {
-        pint = {
-          append_args = {
-            "--config",
-            "src/pint.json",
-          },
-        },
-        -- php_cs_fixer = {
+        -- pint = {
+        --   append_args = {
+        --     "--config",
+        --     "src/pint.json",
+        --   },
+        -- },
+        -- -- php_cs_fixer = {
         --   command = util.find_executable({
         --     "tools/php-cs-fixer/vendor/bin/php-cs-fixer",
         --     "vendor/bin/php-cs-fixer",
@@ -66,7 +67,7 @@ return {
     vim.api.nvim_create_autocmd("BufWritePre", {
       pattern = "*",
       callback = function(args)
-        require("conform").format({ bufnr = args.buf })
+        require("conform").format({ bufnr = args.buf, timeout = 1000000 })
       end,
     })
     -- require("conform").formatters.php_cs_fixer = {

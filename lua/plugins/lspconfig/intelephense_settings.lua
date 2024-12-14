@@ -24,6 +24,8 @@ local intelephense = {
       "**/vendor/**/{Tests,tests}/**",
       "**/.history/**",
       "**/vendor/**/vendor/**",
+      "**/_ide_helper.php",
+      "**/_ide_helper_models.php",
     },
   },
   stubs = {

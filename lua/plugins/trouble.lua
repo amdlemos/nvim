@@ -4,22 +4,27 @@ return {
   cmd = "Trouble",
   keys = {
     {
-      "<leader>xx",
+      "<leader>x",
+      "",
+      desc = "Diagnostics",
+    },
+    {
+      "<leader>xX",
       "<cmd>Trouble diagnostics toggle<cr>",
       desc = "Diagnostics (Trouble)",
     },
     {
-      "<leader>xX",
+      "<leader>xx",
       "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
       desc = "Buffer Diagnostics (Trouble)",
     },
     {
-      "<leader>cs",
+      "<leader>ls",
       "<cmd>Trouble symbols toggle focus=false<cr>",
       desc = "Symbols (Trouble)",
     },
     {
-      "<leader>cl",
+      "<leader>lD",
       "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
       desc = "LSP Definitions / references / ... (Trouble)",
     },
@@ -32,6 +37,11 @@ return {
       "<leader>xQ",
       "<cmd>Trouble qflist toggle<cr>",
       desc = "Quickfix List (Trouble)",
+    },
+    {
+      "<leader>xr",
+      "<cmd>Trouble symbols pinned=true win.relative=win win.position=right<cr>",
+      desc = "Show document symbols (Trouble)",
     },
   },
 }

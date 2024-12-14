@@ -58,6 +58,11 @@ return {
 
     require("nvim-highlight-colors").turnOff() -- disable by default
 
-    vim.keymap.set("n", "<leader>hc", require("nvim-highlight-colors").toggle)
+    -- vim.keymap.set("n", "<leader>hc", require("nvim-highlight-colors").toggle)
   end,
+
+  keys = {
+    { "<leader>h", "", desc = "Highlight Color" },
+    { "<leader>hc", "lua require('nvim-highlight-colors').toggle", desc = "highlighting color" },
+  },
 }

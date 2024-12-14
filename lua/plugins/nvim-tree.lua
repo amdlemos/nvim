@@ -13,6 +13,6 @@ return {
     })
   end,
   keys = {
-    { "<leader>e", "<cmd>NvimTreeToggle<cr>", desc = "NeoTree" },
+    { "<leader>e", "<cmd>NvimTreeToggle<cr>", desc = "NvimTree" },
   },
 }

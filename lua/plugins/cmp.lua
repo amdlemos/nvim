@@ -1,7 +1,11 @@
+if true then
+  return {}
+end
 return {
   -- Autocompletion
   -- "iguanacucumber/magazine.nvim", -- Better performance fork. Original --> "hrsh7th/nvim-cmp",
   "hrsh7th/nvim-cmp",
+  enabled = false,
   name = "nvim-cmp", -- Otherwise highlighting gets messed up
   -- enabled = false,
   -- branch = "perf",

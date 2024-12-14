@@ -1,3 +1,6 @@
+-- if true then
+--   return {}
+-- end
 return {
   { "echasnovski/mini.indentscope", version = "*" },
   { "JoosepAlviste/nvim-ts-context-commentstring" },

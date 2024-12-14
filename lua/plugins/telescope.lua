@@ -23,10 +23,10 @@ return {
           theme = "dropdown",
           previewer = false,
         },
-        live_grep = {
-          theme = "dropdown",
-          previewer = false,
-        },
+        -- live_grep = {
+        --   theme = "dropdown",
+        --   previewer = true,
+        -- },
         buffers = {
           theme = "dropdown",
           previewer = false,
@@ -48,30 +48,38 @@ return {
       },
     })
 
+
     local builtin = require("telescope.builtin")
+
+    vim.keymap.set(
+      "n",
+      "<leader>f",
+      "",
+      { desc = "Find" }
+    )
     vim.keymap.set(
       "n",
       "<leader>ff",
       builtin.find_files,
-      { desc = "Telescope find files" }
+      { desc = "Files (Telescope)" }
     )
     vim.keymap.set(
       "n",
       "<leader>fg",
       builtin.live_grep,
-      { desc = "Telescope live grep" }
+      { desc = "Live Grep (Telescope)" }
     )
     vim.keymap.set(
       "n",
       "<leader>fb",
       builtin.buffers,
-      { desc = "Telescope buffers" }
+      { desc = "Buffers (Telescope)" }
     )
     vim.keymap.set(
       "n",
       "<leader>fh",
       builtin.help_tags,
-      { desc = "Telescope help tags" }
+      { desc = "Help Tags (Telescope)" }
     )
   end,
 }

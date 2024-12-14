@@ -1,0 +1,35 @@
+return {
+  "folke/snacks.nvim",
+  priority = 1000,
+  lazy = false,
+  opts = {
+    -- your configuration comes here
+    -- or leave it empty to use the default settings
+    -- refer to the configuration section below
+    animate = { enabled = false },
+    bigfile = { enabled = false },
+    dashboard = { enabled = false },
+    debug = { enabled = true },
+    dim = { enabled = true },
+    git = { enabled = true },
+    gitbrowse = { false },
+    indent = { enabled = true },
+    input = { enabled = true },
+    lazygit = { enabled = true },
+    notifier = { enabled = false },
+    notify = { enabled = false },
+    profiler = { enabled = true },
+    quickfile = { enabled = true },
+    rename = { enabled = false },
+    scope = { enabled = false },
+    scratch = { enabled = false },
+    scroll = { enabled = false },
+    statuscolumn = { enabled = true },
+    terminal = { enabled = true },
+    toggle = { enabled = true },
+    util = { enabled = true },
+    win = { enabled = true },
+    words = { enabled = false },
+    zen = { enabled = true },
+  },
+}

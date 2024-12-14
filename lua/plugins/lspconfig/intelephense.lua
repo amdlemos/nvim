@@ -1,5 +1,3 @@
--- local lsp = require("vim.lsp")
--- local util = require("plugins.lspconfig.util")
 local lspconfig = require("lspconfig")
 local intelephense_capabilities =
   require("plugins.lspconfig.intelephense_capabilities")

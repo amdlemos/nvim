@@ -2,7 +2,7 @@ vim.g["diagnostics_active"] = true
 function Toggle_diagnostics()
   if vim.g.diagnostics_active then
     vim.g.diagnostics_active = false
-    vim.diagnostic.disable()
+    -- vim.diagnostic.disable()
   else
     vim.g.diagnostics_active = true
     vim.diagnostic.enable()
@@ -15,7 +15,7 @@ vim.keymap.set(
   Toggle_diagnostics,
   { noremap = true, silent = true, desc = "Toggle vim diagnostics" }
 )
-vim.cmd("colorscheme darcula-solid")
+vim.cmd("colorscheme astromars")
 vim.cmd("set termguicolors")
 
 -- Atualiza automaticamente arquivos alterados externamente
@@ -44,3 +44,6 @@ vim.api.nvim_set_keymap(
   ":ToggleTheme<CR>",
   { noremap = true, silent = true }
 )
+vim.diagnostic.config({
+    virtual_text = false
+})

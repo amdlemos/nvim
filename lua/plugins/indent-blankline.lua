@@ -1,8 +1,6 @@
-if true then
-  return {}
-end
 return {
   "lukas-reineke/indent-blankline.nvim",
+  enabled = true,
   dependencies = {
     "nmac427/guess-indent.nvim",
   },

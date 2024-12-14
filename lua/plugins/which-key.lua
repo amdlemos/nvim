@@ -7,6 +7,8 @@ return {
     -- refer to the configuration section below
   },
   keys = {
+    { "[", "", desc = "Prev" },
+    { "]", "", desc = "Next" },
     {
       "<leader>?",
       function()

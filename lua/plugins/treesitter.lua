@@ -1,3 +1,6 @@
+-- if true then
+--   return {}
+-- end
 return {
   "nvim-treesitter/nvim-treesitter",
   config = function()
@@ -9,8 +12,27 @@ return {
         "vimdoc",
         "query",
         "markdown",
+        "json",
+        "xml",
         "php",
+        "phpdoc",
         "markdown_inline",
+        "jsdoc",
+        "tsx",
+        "javascript",
+        "typescript",
+        "dockerfile",
+        "ziggy",
+        "ziggy_schema",
+        "yaml",
+        "tmux",
+        "xcompose",
+        "astro",
+        "git_config",
+        "git_rebase",
+        "gitcommit",
+        "gitattributes",
+        "gitignore"
       },
       highlight = {
         enable = true,
@@ -18,7 +40,7 @@ return {
       },
       indent = {
         enable = true,
-        disable = { "lua" },
+        -- disable = { "lua" },
       },
     })
   end,

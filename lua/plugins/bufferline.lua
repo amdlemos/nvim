@@ -69,9 +69,10 @@ return {
       })
     end,
     keys = {
+      { "<leader>b", "", desc = "Buffer" },
       { "]b", "<Cmd>BufferLineCycleNext<CR>", desc = "Next tab" },
       { "[b", "<Cmd>BufferLineCyclePrev<CR>", desc = "Prev tab" },
-      { "<leader>bd", "<Cmd>Bdelete<CR>", desc = "Prev tab" },
+      { "<leader>bd", "<Cmd>Bdelete<CR>", desc = "Buffer Delete" },
     },
   },
 }
