@@ -6,15 +6,24 @@ return {
       require("lspconfig").lua_ls.setup({})
       require("lspconfig").biome.setup({})
       require("lspconfig").vtsls.setup({})
-      -- require("lspconfig").tailwindcss.setup({})
+      require("lspconfig").tailwindcss.setup({})
       require("lspconfig").ember.setup({})
-      require("plugins.lspconfig.intelephense")
-      -- vim.api.nvim_set_keymap(
-      --   "n",
-      --   "<leader>ca",
-      --   "<cmd>lua vim.lsp.buf.code_action()<CR>",
-      --   { noremap = true, silent = true }
-      -- )
+      require("lspconfig").intelephense.setup({})
+      require("lspconfig").basedpyright.setup({})
+      -- require("plugins.lspconfig.intelephense")
+    end,
+  },
+  {
+    "ray-x/lsp_signature.nvim",
+    event = "InsertEnter",
+    opts = {
+      bind = true,
+      handler_opts = {
+        border = "rounded",
+      },
+    },
+    config = function(_, opts)
+      require("lsp_signature").setup(opts)
     end,
   },
 }

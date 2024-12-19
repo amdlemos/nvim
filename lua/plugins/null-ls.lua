@@ -77,6 +77,10 @@ return {
           prefer_local = "vendor/bin",
         }),
 
+        nls.builtins.formatting.duster.with({
+          prefer_local = "vendor/bin",
+        }),
+
         nls.builtins.formatting.shfmt,
         nls.builtins.formatting.xmllint,
         nls.builtins.formatting.prettier,

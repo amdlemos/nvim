@@ -14,8 +14,8 @@ vim.keymap.set(
   "<leader>xd",
   Toggle_diagnostics,
   { noremap = true, silent = true, desc = "Toggle vim diagnostics" }
-)
-vim.cmd("colorscheme astromars")
+ )
+vim.cmd("colorscheme astrodark")
 vim.cmd("set termguicolors")
 
 -- Atualiza automaticamente arquivos alterados externamente
@@ -28,10 +28,10 @@ vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter" }, {
 function ToggleTheme()
   if vim.o.background == "light" then
     vim.o.background = "dark"
-    vim.cmd("colorscheme darcula-solid") -- Mude para o tema escuro
+    vim.cmd("colorscheme astrodark") -- Mude para o tema escuro
   else
     vim.o.background = "light"
-    vim.cmd("colorscheme github_light_default") -- Mude para o tema claro
+    vim.cmd("colorscheme astrojupiter") -- Mude para o tema claro
   end
 end
 
@@ -44,6 +44,17 @@ vim.api.nvim_set_keymap(
   ":ToggleTheme<CR>",
   { noremap = true, silent = true }
 )
+
 vim.diagnostic.config({
     virtual_text = false
+})
+
+vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+
+vim.api.nvim_create_autocmd('TextYankPost', {
+  desc = 'Highlight when yanking (copying) text',
+  group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
+  callback = function()
+    vim.highlight.on_yank()
+  end,
 })

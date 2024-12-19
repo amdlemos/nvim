@@ -1,22 +1,15 @@
--- vim.opt.relativenumber = true
-
 -- Configuração global (aplica para todos os arquivos)
--- vim.opt.expandtab = true -- Converte tabs em espaços
--- vim.opt.shiftwidth = 2 -- Número de espaços para cada nível de indentação
--- vim.opt.tabstop = 2 -- Número de espaços que um tab representa
-
--- vim.opt.conceallevel = 0
--- vim.opt.concealcursor = ""
---
--- vim.opt.foldmethod = "expr"
--- vim.opt.foldexpr = "nvim_treesitter#foldexpr()" -- Para Tree-sitter
---
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
-
+vim.g.have_nerd_font = true
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
+
 local options = {
+  conceallevel = 0,
+  concealcursor = "",
+  foldmethod = "expr",
+  foldexpr = "nvim_treesitter#foldexpr()", -- Para Tree-sitter
 
   -- user interface
 
@@ -31,6 +24,10 @@ local options = {
   splitbelow = true, -- when splitting horizontally, new window goes below
   splitright = true, -- when splitting vertically, new window goes to the right
   showmode = false, -- mode will be shown by statusline
+
+  -- kickstart config
+  list = true,
+  listchars = { tab = "» ", trail = "·", nbsp = "␣" },
 
   -- tabs and indentations
 
