@@ -22,10 +22,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- vim.diagnostic.config({
---   virtual_text = false,
--- })
-require("config.options")
+-- require("config.options")
 
 -- Setup lazy.nvim
 require("lazy").setup({

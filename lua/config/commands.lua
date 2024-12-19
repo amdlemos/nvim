@@ -15,7 +15,8 @@ vim.keymap.set(
   Toggle_diagnostics,
   { noremap = true, silent = true, desc = "Toggle vim diagnostics" }
  )
-vim.cmd("colorscheme astrodark")
+
+vim.cmd("colorscheme astromars")
 vim.cmd("set termguicolors")
 
 -- Atualiza automaticamente arquivos alterados externamente
@@ -28,7 +29,7 @@ vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter" }, {
 function ToggleTheme()
   if vim.o.background == "light" then
     vim.o.background = "dark"
-    vim.cmd("colorscheme astrodark") -- Mude para o tema escuro
+    vim.cmd("colorscheme astromars") -- Mude para o tema escuro
   else
     vim.o.background = "light"
     vim.cmd("colorscheme astrojupiter") -- Mude para o tema claro

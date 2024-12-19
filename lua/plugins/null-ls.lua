@@ -7,22 +7,22 @@ return {
       "nvimtools/none-ls-extras.nvim",
     },
     opts = function(_, opts)
-      local on_attach = function(client, bufnr)
-        if client.supports_method("textDocument/formatting") then
-          vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-          vim.api.nvim_create_autocmd("BufWritePre", {
-            group = augroup,
-            buffer = bufnr,
-            callback = function()
-              vim.lsp.buf.format({ bufnr = bufnr })
-            end,
-          })
-        end
-      end
+      -- local on_attach = function(client, bufnr)
+      --   if client.supports_method("textDocument/formatting") then
+      --     vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+      --     vim.api.nvim_create_autocmd("BufWritePre", {
+      --       group = augroup,
+      --       buffer = bufnr,
+      --       callback = function()
+      --         vim.lsp.buf.format({ bufnr = bufnr })
+      --       end,
+      --     })
+      --   end
+      -- end
+      --
+      -- opts.on_attach = on_attach
 
       local nls = require("null-ls")
-      -- opts.default_timeout = 10000000000
-      opts.on_attach = on_attach
       opts.root_dir = opts.root_dir
         or require("null-ls.utils").root_pattern(
           ".null-ls-root",
@@ -32,13 +32,6 @@ return {
           ".git"
         )
       opts.sources = vim.list_extend(opts.sources or {}, {
-
-        -- phpmd
-        -- nls.builtins.diagnostics.phpmd.with({
-        --   prefer_local = "vendor/bin",
-        --   args = { '-',  'json', 'phpmd.xml' }
-        -- }),
-
         --phpstan
         nls.builtins.diagnostics.phpstan.with({
           prefer_local = "vendor/bin",
@@ -48,7 +41,6 @@ return {
         nls.builtins.diagnostics.phpcs.with({
           prefer_local = "vendor/bin",
         }),
-
 
         -- psaml
         require("lspconfig").psalm.setup({
@@ -81,11 +73,7 @@ return {
           prefer_local = "vendor/bin",
         }),
 
-        nls.builtins.formatting.shfmt,
         nls.builtins.formatting.xmllint,
-        nls.builtins.formatting.prettier,
-        nls.builtins.formatting.stylua,
-        -- nls.builtins.formatting.prettierd,
       })
     end,
   },
