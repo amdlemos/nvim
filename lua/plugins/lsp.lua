@@ -115,7 +115,7 @@ return {
         "vtsls",
         "lua_ls",
         "biome",
-        -- "tailwindcss",
+        "tailwindcss",
         "ember",
         "intelephense",
         "basedpyright",
