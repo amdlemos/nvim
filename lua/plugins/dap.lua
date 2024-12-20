@@ -4,53 +4,7 @@
 return {
   "mfussenegger/nvim-dap",
   config = function()
-    require("dap-vscode-js").setup({
-      node_path = "node",
-      -- debugger_path = "(runtimedir)/site/pack/packer/opt/vscode-js-debug", -- Path to vscode-js-debug installation.
-      debugger_cmd = { "node", "/home/amdlemos/.config/vscode-js-debug/js-debug/src/dapDebugServer.js" }, -- Command to use to launch the debug server. Takes precedence over `node_path` and `debugger_path`.
-      adapters = {
-        "chrome",
-        "pwa-node",
-        "pwa-chrome",
-        "pwa-msedge",
-        "node-terminal",
-        "pwa-extensionHost",
-        "node",
-        "chrome",
-      }, -- which adapters to register in nvim-dap
-      -- debugger_port = 9229, -- Altere para outra porta disponível
-      -- log_file_path = "(stdpath cache)/dap_vscode_js.log" -- Path for file logging
-      -- log_file_level = false -- Logging level for output to file. Set to false to disable file logging.
-      -- log_console_level = vim.log.levels.ERROR -- Logging level for output to console. Set to false to disable console output.
-    })
     local dap = require("dap")
-    local js_based_languages =
-      { "typescript", "javascript", "typescriptreact", "javascriptreact" }
-
-    for _, language in ipairs(js_based_languages) do
-      dap.configurations[language] = {
-        {
-          type = "pwa-node",
-          request = "attach",
-          name = "Attach",
-          localRoot = "${workspaceFolder}", -- Caminho local no host
-          cwd = "${workspaceFolder}",
-          port = 9229,
-          protocol = "inspector",
-          remoteRoot = "/var/www/html", -- Caminho remoto dentro do contêiner
-          -- websocketAddress = function()
-          --   return string.match(
-          --     vim.api.nvim_exec(
-          --       '!docker logs [conatiner-name]|& grep -oE "ws.*" | tail -1',
-          --       true
-          --     ),
-          --     "ws:.*"
-          --   )
-          -- end,
-        },
-      }
-    end
-
     dap.adapters.php = {
       type = "executable",
       command = "node",
@@ -70,33 +24,209 @@ return {
         },
       },
     }
-    --   require("dap").configurations[language] = {
-    --     {
-    --       type = "pwa-node",
-    --       request = "launch",
-    --       name = "Launch file",
-    --       program = "${file}",
-    --       mode = "remote",
-    --       port = 5174,
-    --       cwd = "${workspaceFolder}",
+    -- Caminho para o debugger
+    local JS_DEBUG_PATH =
+      "/home/amdlemos/.config/js-debug/src/dapDebugServer.js"
+    -- Função de log para debug
+    local function log_debug(message)
+      vim.notify("DAP Debug: " .. message, vim.log.levels.DEBUG)
+    end
+
+    -- Configuração do adaptador Chrome/React
+    dap.adapters["pwa-chrome"] = {
+      type = "server",
+      host = "localhost",
+      port = "${port}",
+      executable = {
+        command = "node",
+        args = {
+          JS_DEBUG_PATH,
+          "${port}",
+        },
+      },
+    }
+
+    -- Configuração do adaptador Node
+    dap.adapters["pwa-node"] = {
+      type = "server",
+      host = "localhost",
+      port = "${port}",
+      executable = {
+        command = "node",
+        args = {
+          JS_DEBUG_PATH,
+          "${port}",
+        },
+      },
+    }
+
+    -- Configuração do adaptador Firefox
+    -- dap.adapters["firefox"] = {
+    --   type = "executable",
+    --   command = "node",
+    --   args = {
+    --     JS_DEBUG_PATH,
+    --     "${port}",
+    --   },
+    -- }
+    -- Configuração do adaptador Firefox com mais logs
+    dap.adapters["firefox"] = {
+      type = "executable",
+      command = "node",
+      args = { JS_DEBUG_PATH },
+      options = {
+        env = {
+          VSCODE_DEBUG_PORT = "${port}",
+          VSCODE_DEBUG_LOG = "1", -- Habilita logging
+          NODE_DEBUG = "debug", -- Debug detalhado do Node
+        },
+      },
+      enrich_config = function(config, on_config)
+        log_debug("Firefox config: " .. vim.inspect(config))
+        on_config(config)
+      end,
+    }
+
+    -- Configurações para ReactJS
+    dap.configurations.javascriptreact = {
+      {
+        type = "pwa-chrome",
+        name = "Debug React (Chrome)",
+        request = "launch",
+        url = "http://localhost", -- URL do seu app React
+        webRoot = "${workspaceFolder}",
+        sourceMaps = true,
+        protocol = "inspector",
+        port = 9222, -- Porta do Chrome Debug
+        skipFiles = { "<node_internals>/**", "**/node_modules/**" },
+      },
+      {
+        type = "pwa-chrome",
+        name = "Attach to Chrome",
+        request = "attach",
+        program = "${file}",
+        cwd = vim.fn.getcwd(),
+        sourceMaps = true,
+        protocol = "inspector",
+        port = 9222,
+        webRoot = "${workspaceFolder}",
+      },
+      {
+        type = "firefox",
+        name = "Debug React (Firefox)",
+        request = "launch",
+        url = "http://localhost",
+        webRoot = "${workspaceFolder}",
+        firefoxExecutable = "/usr/bin/firefox", -- Ajuste para o caminho do seu Firefox
+        skipFiles = { "<node_internals>/**", "**/node_modules/**" },
+        pathMappings = {
+          {
+            url = "webpack:///",
+            path = "${workspaceFolder}/",
+          },
+        },
+      },
+      {
+        type = "firefox",
+        name = "Attach to Firefox",
+        request = "attach",
+        url = "http://localhost",
+        webRoot = "${workspaceFolder}",
+        pathMappings = {
+          {
+            url = "webpack:///",
+            path = "${workspaceFolder}/",
+          },
+        },
+      },
+    }
+
+    -- Configurações para JavaScript/React
+    -- dap.configurations.javascript = {
+    --   {
+    --     type = "pwa-chrome",
+    --     name = "Debug React (Chrome)",
+    --     request = "launch",
+    --     url = "http://localhost",
+    --     webRoot = "${workspaceFolder}",
+    --     sourceMaps = true,
+    --     protocol = "inspector",
+    --     port = 9222,
+    --     skipFiles = { "<node_internals>/**", "**/node_modules/**" },
+    --   },
+    --   {
+    --     type = "pwa-node",
+    --     request = "launch",
+    --     name = "Launch Current File (pwa-node)",
+    --     cwd = "${workspaceFolder}",
+    --     args = { "${file}" },
+    --     sourceMaps = true,
+    --     protocol = "inspector",
+    --   },
+    --   {
+    --     type = "firefox",
+    --     name = "Debug React (Firefox)",
+    --     request = "launch",
+    --     url = "http://localhost:3000",
+    --     webRoot = "${workspaceFolder}",
+    --     firefoxExecutable = "/usr/bin/firefox", -- Ajuste para o caminho do seu Firefox
+    --     skipFiles = { "<node_internals>/**", "**/node_modules/**" },
+    --     pathMappings = {
+    --       {
+    --         url = "webpack:///",
+    --         path = "${workspaceFolder}/",
+    --       },
     --     },
+    --   },
+    -- Configuração para attach no Firefox
+    -- {
+    --   type = "firefox",
+    --   name = "Attach to Firefox",
+    --   request = "attach",
+    --   url = "http://localhost:3000",
+    --   webRoot = "${workspaceFolder}",
+    --   pathMappings = {
     --     {
-    --       type = "pwa-node",
-    --       request = "attach",
-    --       name = "Attach",
-    --       processId = require("dap.utils").pick_process,
-    --       cwd = "${workspaceFolder}",
+    --       url = "webpack:///",
+    --       path = "${workspaceFolder}/",
     --     },
-    --     {
-    --       type = "pwa-chrome",
-    --       request = "launch",
-    --       name = 'Start Chrome with "localhost"',
-    --       url = "http://localhost:3000",
-    --       webRoot = "${workspaceFolder}",
-    --       userDataDir = "${workspaceFolder}/.vscode/vscode-chrome-debug-userdatadir",
-    --     },
-    --   }
-    -- end
+    --   },
+    -- },
+    -- }
+
+    -- Copia as configurações para javascriptreact (esse tá funcionando no google)
+    -- dap.configurations.javascript = dap.configurations.javascript
+
+    -- Copia as configurações para javascript e javascriptreact
+    dap.configurations.javascriptreact = dap.configurations.javascriptreact
+    -- dap.configurations.javascriptreact = dap.configurations.typescriptreact
+
+    -- Função auxiliar para garantir que não há debuggers ativos
+    local function kill_all_dap_sessions()
+      for _, session in pairs(dap.sessions()) do
+        session:terminate()
+      end
+      dap.terminate()
+    end
+
+    -- Adiciona listeners para eventos DAP para debug
+    dap.listeners.after.event_initialized["dap-init"] = function()
+      log_debug("Debug session initialized")
+    end
+
+    dap.listeners.after.event_terminated["dap-term"] = function()
+      log_debug("Debug session terminated")
+    end
+
+    dap.listeners.before.event_exited["dap-exit"] = function(session, body)
+      log_debug(
+        "Debug session exiting with code: " .. (body.exitCode or "unknown")
+      )
+      log_debug("Exit reason: " .. vim.inspect(body))
+    end
+
+    -- Comando para matar todas as sessões DAP
+    vim.api.nvim_create_user_command("DapKillAll", kill_all_dap_sessions, {})
   end,
   keys = {
     {
@@ -158,12 +288,12 @@ return {
       end,
       desc = "View the current frames in a sidebar",
     },
-    {
-      "<leader>do",
-      function()
-        require("dapui").open()
-      end,
-      desc = "Open DAP UI",
-    },
+    -- {
+    --   "<leader>do",
+    --   function()
+    --     require("dapui").open()
+    --   end,
+    --   desc = "Open DAP UI",
+    -- },
   },
 }
