@@ -17,10 +17,19 @@ return {
     "AstroNvim/astrotheme",
     lazy = false,
     config = function()
+      local color = require("astrotheme.lib.color")
       require("astrotheme").setup({
         style = {
           inactive = false,
-        }
+        },
+        palettes = {
+          astromars = {
+            ui = {
+              -- current_line = "#FFFFFF",
+              current_line = color.new("#1E1517"):lighten(65):tohex(),
+            },
+          },
+        },
       })
     end,
   },
