@@ -7,20 +7,21 @@ return {
       "nvimtools/none-ls-extras.nvim",
     },
     opts = function(_, opts)
-      -- local on_attach = function(client, bufnr)
-      --   if client.supports_method("textDocument/formatting") then
-      --     vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-      --     vim.api.nvim_create_autocmd("BufWritePre", {
-      --       group = augroup,
-      --       buffer = bufnr,
-      --       callback = function()
-      --         vim.lsp.buf.format({ bufnr = bufnr })
-      --       end,
-      --     })
-      --   end
-      -- end
-      --
-      -- opts.on_attach = on_attach
+      local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+      local on_attach = function(client, bufnr)
+        if client.supports_method("textDocument/formatting") then
+          vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+          vim.api.nvim_create_autocmd("BufWritePre", {
+            group = augroup,
+            buffer = bufnr,
+            callback = function()
+              vim.lsp.buf.format({ bufnr = bufnr })
+            end,
+          })
+        end
+      end
+
+      opts.on_attach = on_attach
 
       local nls = require("null-ls")
       opts.root_dir = opts.root_dir
