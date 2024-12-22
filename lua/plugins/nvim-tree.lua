@@ -1,6 +1,6 @@
-if true then
-  return {}
-end
+-- if true then
+--   return {}
+-- end
 return {
   "nvim-tree/nvim-tree.lua",
   version = "*",
@@ -45,9 +45,9 @@ return {
     })
     vim.keymap.set(
       "n",
-      "A",
-      toggle_width_adaptive
-      -- opts("Toggle Adaptive Width")
+      "<leader>a",
+      toggle_width_adaptive,
+      { desc = "Adjust Nvim-Tree" }
     )
   end,
   keys = {
