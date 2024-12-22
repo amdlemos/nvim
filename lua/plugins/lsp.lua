@@ -10,10 +10,10 @@ return {
         "vtsls",
         "lua_ls",
         "biome",
-        "tailwindcss",
-        "ember",
         "intelephense",
-        "basedpyright",
+        -- "tailwindcss",
+        -- "ember",
+        -- "basedpyright",
       }
       for _, lsp in ipairs(servers) do
         require("lspconfig")[lsp].setup({
