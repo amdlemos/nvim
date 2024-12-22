@@ -10,6 +10,15 @@ return {
           stop_after_first = true,
         },
       },
+      -- formatters = {
+      -- injected = { options = { ignore_errors = true } },
+      -- # Example of using dprint only when a dprint.json file is present
+      -- dprint = {
+      --   condition = function(ctx)
+      --     return vim.fs.find({ "dprint.json" }, { path = ctx.filename, upward = true })[1]
+      --   end,
+      -- },
+      -- },
     })
 
     vim.api.nvim_create_autocmd("BufWritePre", {
