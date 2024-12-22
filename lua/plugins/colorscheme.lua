@@ -25,8 +25,7 @@ return {
         palettes = {
           astromars = {
             ui = {
-              -- current_line = "#FFFFFF",
-              current_line = color.new("#1E1517"):lighten(65):tohex(),
+              current_line = color.new("#1E1517"):lighten(10):tohex(),
             },
           },
         },
