@@ -34,33 +34,33 @@ return {
     })
   end,
   init = function()
-    -- require("utils.remaps").map_virtual({
-    --   {
-    --     "<leader>D",
-    --     group = "database",
-    --     icon = { icon = " ", hl = "Constant" },
-    --   },
-    --   {
-    --     "<leader>Dt",
-    --     group = "toggle dadbod",
-    --     icon = { icon = " ", hl = "Constant" },
-    --   },
-    --   {
-    --     "<leader>Df",
-    --     group = "find buffer",
-    --     icon = { icon = " ", hl = "Constant" },
-    --   },
-    --   {
-    --     "<leader>Dr",
-    --     group = "rename buffer",
-    --     icon = { icon = "󰑕 ", hl = "Constant" },
-    --   },
-    --   {
-    --     "<leader>Dq",
-    --     group = "last query",
-    --     icon = { icon = " ", hl = "Constant" },
-    --   },
-    -- })
+    require("utils.remaps").map_virtual({
+      {
+        "<leader>D",
+        group = "database",
+        icon = { icon = " ", hl = "Constant" },
+      },
+      {
+        "<leader>Dt",
+        group = "toggle dadbod",
+        icon = { icon = " ", hl = "Constant" },
+      },
+      {
+        "<leader>Df",
+        group = "find buffer",
+        icon = { icon = " ", hl = "Constant" },
+      },
+      {
+        "<leader>Dr",
+        group = "rename buffer",
+        icon = { icon = "󰑕 ", hl = "Constant" },
+      },
+      {
+        "<leader>Dq",
+        group = "last query",
+        icon = { icon = " ", hl = "Constant" },
+      },
+    })
   end,
   keys = {
     { "<leader>D", "", desc = "Dadbod" },
