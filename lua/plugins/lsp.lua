@@ -10,7 +10,7 @@ return {
         "vtsls",
         "lua_ls",
         "biome",
-        "intelephense",
+        -- "intelephense",
         -- "tailwindcss",
         -- "ember",
         -- "basedpyright",
@@ -18,15 +18,15 @@ return {
       for _, lsp in ipairs(servers) do
         require("lspconfig")[lsp].setup({
           capabilities = capabilities,
-          on_attach = function(client)
-            print(
-              string.format(
-                "LSP %s iniciado com encoding: %s",
-                client.name,
-                client.server_capabilities.positionEncoding or "não definido"
-              )
-            )
-          end,
+          -- on_attach = function(client)
+          --   print(
+          --     string.format(
+          --       "LSP %s iniciado com encoding: %s",
+          --       client.name,
+          --       client.server_capabilities.positionEncoding or "não definido"
+          --     )
+          --   )
+          -- end,
         })
       end
       -- require("lspconfig").lua_ls.setup({})
@@ -34,7 +34,21 @@ return {
       -- require("lspconfig").vtsls.setup({})
       -- require("lspconfig").tailwindcss.setup({})
       -- require("lspconfig").ember.setup({})
-      -- require("lspconfig").intelephense.setup({})
+      require("lspconfig").intelephense.setup({
+        capabilities = capabilities,
+        settings = {
+          intelephense = {
+            environment = {
+              phpVersion = "8.3",
+            },
+          },
+        },
+      })
+      require("lspconfig").clangd.setup({
+        cmd = { "clangd" },
+        filetypes = { "mql", "mq4", "mq5" },
+        -- root_dir = lspconfig.util.root_pattern(".git"),
+      })
       -- require("lspconfig").basedpyright.setup({})
       -- require("plugins.lspconfig.intelephense")
     end,
