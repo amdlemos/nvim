@@ -13,7 +13,7 @@ local options = {
 
   -- user interface
 
-  mouse = "", -- disable mouse in neovim
+  mouse = "a", -- disable mouse in neovim
   clipboard = "unnamedplus", -- neovim uses the system clipboard by default
   cursorline = true,
   showtabline = 0, -- hide tabline
