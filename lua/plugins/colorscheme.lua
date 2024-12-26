@@ -22,6 +22,10 @@ return {
         style = {
           inactive = false,
         },
+        plugins = {
+          ["bufferline.nvim"] = true,
+          ["nvim-tree"] = true,
+        },
         palettes = {
           astromars = {
             ui = {
