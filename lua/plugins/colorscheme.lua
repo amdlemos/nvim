@@ -21,6 +21,7 @@ return {
       require("astrotheme").setup({
         style = {
           inactive = false,
+          -- transparent = true,
         },
         plugins = {
           ["bufferline.nvim"] = true,

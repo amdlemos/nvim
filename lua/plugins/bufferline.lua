@@ -1,3 +1,6 @@
+-- if true then
+--   return {}
+-- end
 return {
   {
     "akinsho/bufferline.nvim",
@@ -75,4 +78,5 @@ return {
       { "<leader>bd", "<Cmd>Bdelete<CR>", desc = "Buffer Delete" },
     },
   },
+  { "tiagovla/scope.nvim", config = true },
 }

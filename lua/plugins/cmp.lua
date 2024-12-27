@@ -1,7 +1,7 @@
 -- Completion
-if true then
-  return {}
-end
+-- if true then
+--   return {}
+-- end
 return {
   "hrsh7th/nvim-cmp",
   enabled = true,
@@ -186,6 +186,7 @@ return {
         { name = "copilot" },
         { name = "buffer" },
         { name = "path" },
+        { name = "vim-dadbod-completion" },
       },
       experimental = {
         -- ghost_text = true,
@@ -194,10 +195,10 @@ return {
 
     -- cmp.setup.filetype("sql", {
     --   sources = cmp.config.sources({
-    --     { name = 'vim-dadbod-completion' },
+    --     { name = "vim-dadbod-completion" },
     --   }, {
-    --     { name = 'buffer' },
-    --   })
+    --     { name = "buffer" },
+    --   }),
     -- })
   end,
 }

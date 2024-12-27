@@ -1,4 +1,7 @@
 -- https://github.com/xero/dotfiles
+-- if true then
+--   return {}
+-- end
 return {
   {
     "xero/evangelion.nvim",

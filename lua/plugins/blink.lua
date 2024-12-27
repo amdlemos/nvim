@@ -1,4 +1,7 @@
 -- https://github.com/ThorstenRhau/neovim
+if true then
+  return {}
+end
 return {
   "saghen/blink.cmp",
   dependencies = {

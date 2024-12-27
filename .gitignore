@@ -1,3 +1,4 @@
 /lua/plugins/disabled
 /lua/plugins/lspconfig
 /lua/plugins/plugins
+db_ui/connections.json

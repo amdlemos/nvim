@@ -8,8 +8,9 @@ return {
         lua = { "stylua" },
         php = {
           "easy-coding-standard",
-          stop_after_first = true,
+          -- stop_after_first = true,
         },
+        json = { "prettier" },
       },
       formatters = {
         injected = { options = { ignore_errors = true } },
@@ -26,7 +27,7 @@ return {
         stylua = {
           condition = function(ctx)
             return vim.fs.find(
-              { "stylua.toml" },
+              { ".stylua.toml" },
               { path = ctx.filename, upward = true }
             )[1]
           end,

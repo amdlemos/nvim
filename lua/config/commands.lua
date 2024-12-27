@@ -32,7 +32,7 @@ function ToggleTheme()
     vim.cmd("colorscheme astromars") -- Mude para o tema escuro
   else
     vim.o.background = "light"
-    vim.cmd("colorscheme astrojupiter") -- Mude para o tema claro
+    vim.cmd("colorscheme astrolight") -- Mude para o tema claro
   end
 end
 
@@ -63,16 +63,62 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   end,
 })
 
--- function _G.set_terminal_keymaps()
---   local opts = { buffer = 0 }
---   vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], opts)
-  -- vim.keymap.set("t", "jk", [[<C-\><C-n>]], opts)
-  -- vim.keymap.set("t", "<C-h>", [[<Cmd>wincmd h<CR>]], opts)
-  -- vim.keymap.set("t", "<C-j>", [[<Cmd>wincmd j<CR>]], opts)
-  -- vim.keymap.set("t", "<C-k>", [[<Cmd>wincmd k<CR>]], opts)
-  -- vim.keymap.set("t", "<C-l>", [[<Cmd>wincmd l<CR>]], opts)
-  -- vim.keymap.set("t", "<C-w>", [[<C-\><C-n><C-w>]], opts)
--- end
+-- ]t para ir para a próxima aba
+vim.api.nvim_set_keymap(
+  "n",
+  "]t",
+  ":tabnext<CR>",
+  { noremap = true, silent = true }
+)
 
--- if you only want these mappings for toggle term use term://*toggleterm#* instead
--- vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
+-- [t para ir para a aba anterior
+vim.api.nvim_set_keymap(
+  "n",
+  "[t",
+  ":tabprevious<CR>",
+  { noremap = true, silent = true }
+)
+
+-- Configuração dos keymaps do terminal
+function _G.set_terminal_keymaps()
+  local opts = { buffer = 0 }
+  -- Esc duas vezes para entrar no modo normal
+  vim.keymap.set("t", "<esc><esc>", [[<C-\><C-n>]], opts)
+  -- Alt + hjkl para navegar entre janelas em modo terminal
+  -- vim.keymap.set('t', '<A-h>', [[<C-\><C-n><C-W>h]], opts)
+  -- vim.keymap.set('t', '<A-j>', [[<C-\><C-n><C-W>j]], opts)
+  -- vim.keymap.set('t', '<A-k>', [[<C-\><C-n><C-W>k]], opts)
+  -- vim.keymap.set('t', '<A-l>', [[<C-\><C-n><C-W>l]], opts)
+  -- Ctrl + hjkl para navegar em modo normal
+  -- vim.keymap.set('n', '<C-h>', '<C-w>h', opts)
+  -- vim.keymap.set('n', '<C-j>', '<C-w>j', opts)
+  -- vim.keymap.set('n', '<C-k>', '<C-w>k', opts)
+  -- vim.keymap.set('n', '<C-l>', '<C-w>l', opts)
+end
+
+-- Autocommand para aplicar os keymaps quando abrir um terminal
+vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
+
+local api = vim.api
+-- Função para verificar se a tab atual contém um toggleterm
+local function is_current_tab_toggleterm()
+  local current_tab = api.nvim_get_current_tabpage()
+  for _, win in ipairs(api.nvim_tabpage_list_wins(current_tab)) do
+    local buf = api.nvim_win_get_buf(win)
+    local buf_type = api.nvim_buf_get_option(buf, "filetype")
+    if buf_type == "toggleterm" then
+      return true
+    end
+  end
+  return false
+end
+
+-- Função para gerenciar a visibilidade da lualine
+local function manage_lualine()
+  if is_current_tab_toggleterm() then
+    require("lualine").hide()
+  else
+    require("lualine").hide({ unhide = true })
+  end
+end
+-- vim.cmd([[hi NvimTreeNormal guibg=NONE ctermbg=NONE]])

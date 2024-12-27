@@ -63,7 +63,7 @@ return {
         local cwd = vim.fn.getcwd()
         local session = string.match(cwd, ".*/(.*)")
         -- Defina o caminho do seu arquivo de configuração do tmux
-        local tmux_config = "~/github/rebelot-dotfiles/tmux.conf"
+        local tmux_config = "~/.tmux-nvim.conf"
         -- Defina o nome do socket
         local socket_name = session
 
