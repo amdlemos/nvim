@@ -4,30 +4,111 @@ return {
   config = function()
     local dap = require("dap")
     -- PHP
+    -- dap.adapters.php = {
+    --   type = "executable",
+    --   command = "node",
+    --   args = { "/home/amdlemos/.config/vscode-php-debug/out/phpDebug.js" },
+    -- }
+
+    -- dap.configurations.php = {
+    --   {
+    --     name = "Listen for Xdebug Docker",
+    --     type = "php",
+    --     request = "launch",
+    --     port = 9003,
+    --     -- this is where your file is in the container
+    --     pathMappings = {
+    --       ["/var/www/html"] = "/home/amdlemos/github/slim/first",
+    --     },
+    --   },
+    --   {
+    --     name = "Listen for Xdebug",
+    --     type = "php",
+    --     request = "launch",
+    --     port = 9003,
+    --   },
+    -- }
+
+    -- Configuração básica do PHP
+    -- dap.configurations.php = {
+    --   {
+    --     type = "php",
+    --     request = "launch",
+    --     name = "Listen for Xdebug",
+    --     port = 9003,
+    --     pathMappings = {
+    --       ["/var/www/html"] = "${workspaceFolder}",
+    --     },
+    --   },
+    -- }
+
+    -- Debug logger
+    local function debug_config()
+      print("DAP Configurations:")
+      print(vim.inspect(dap.configurations))
+      print("\nPHP Configurations:")
+      print(vim.inspect(dap.configurations.php))
+    end
+
+    -- Configuração do adaptador PHP com logs
     dap.adapters.php = {
       type = "executable",
       command = "node",
       args = { "/home/amdlemos/.config/vscode-php-debug/out/phpDebug.js" },
-    }
-    dap.configurations.php = {
-      {
-        name = "Listen for Xdebug Docker",
-        type = "php",
-        request = "launch",
-        port = 9003,
-        -- this is where your file is in the container
-        pathMappings = {
-          -- ["/var/www/html"] = "/home/amdlemos/backup/autis/revista-exato/admin/src",
-          ["/var/www/html"] = "/home/amdlemos/github/whitelabel",
-        },
-      },
-      {
-        name = "Listen for Xdebug",
-        type = "php",
-        request = "launch",
-        port = 9003,
+      options = {
+        cwd = vim.fn.getcwd(),
       },
     }
+
+    -- Função para carregar configurações do VSCode com logs detalhados
+    local function load_vscode_config()
+      local current_dir = vim.fn.getcwd()
+      local vscode_config = current_dir .. "/.vscode/launch.json"
+
+      print("Tentando carregar configurações de: " .. vscode_config)
+
+      local file = io.open(vscode_config, "r")
+      if not file then
+        print("Erro: Arquivo launch.json não encontrado")
+        return
+      end
+
+      local content = file:read("*all")
+      file:close()
+
+      local ok, config = pcall(vim.fn.json_decode, content)
+      if not ok then
+        print("Erro ao decodificar JSON: " .. vim.inspect(config))
+        return
+      end
+
+      if config and config.configurations then
+        dap.configurations.php = {}
+        for _, conf in ipairs(config.configurations) do
+          if conf.type == "php" then
+            print("Adicionando configuração PHP: " .. vim.inspect(conf))
+            table.insert(dap.configurations.php, conf)
+          end
+        end
+      end
+
+      debug_config()
+    end
+
+    -- Comandos para diagnóstico
+    vim.api.nvim_create_user_command("DebugDapConfig", debug_config, {})
+    vim.api.nvim_create_user_command(
+      "ReloadDebugConfig",
+      load_vscode_config,
+      {}
+    )
+
+    -- Carrega configurações ao iniciar
+    vim.api.nvim_create_autocmd({ "VimEnter" }, {
+      callback = function()
+        load_vscode_config()
+      end,
+    })
 
     -- JavaScript
     local JS_DEBUG_PATH =
