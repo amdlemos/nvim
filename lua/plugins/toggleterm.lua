@@ -60,21 +60,44 @@ return {
             require("lualine").hide({ unhide = true })
           end,
         })
-
-        -- Se não encontrou nenhuma instância do ToggleTerm, cria uma nova tab e abre o terminal
-        -- vim.cmd("ToggleTerm direction=tab")
         local cwd = vim.fn.getcwd()
         local session = string.match(cwd, ".*/(.*)")
-        local handle = io.popen("zellij list-sessions")
+        -- Defina o caminho do seu arquivo de configuração do tmux
+        local tmux_config = "~/github/rebelot-dotfiles/tmux.conf"
+        -- Defina o nome do socket
+        local socket_name = session
+
+        -- Verifica se a sessão existe
+        local handle = io.popen(
+          string.format(
+            "tmux -L %s list-sessions 2>/dev/null | grep '%s'",
+            socket_name,
+            session
+          )
+        )
         local result = handle:read("*a")
-        handle.close()
-        local exist = string.find(result, session) ~= nil
-        if exist then
+        handle:close()
+
+        if result ~= "" then
+          -- Se a sessão existe, anexa a ela
           vim.cmd(
-            'TermExec cmd="zellij attach ' .. session .. '"  " direction=tab'
+            string.format(
+              'TermExec cmd="tmux -L %s -f %s attach-session -t %s" direction=tab',
+              socket_name,
+              tmux_config,
+              session
+            )
           )
         else
-          vim.cmd('TermExec cmd="zellij -s ' .. session .. '"  " direction=tab')
+          -- Se a sessão não existe, cria uma nova
+          vim.cmd(
+            string.format(
+              'TermExec cmd="tmux -L %s -f %s new-session -s %s" direction=tab',
+              socket_name,
+              tmux_config,
+              session
+            )
+          )
         end
       end,
       desc = "Toggle Terminal in a tab (focus existing or create new)",
