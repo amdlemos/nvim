@@ -18,22 +18,8 @@ return {
       for _, lsp in ipairs(servers) do
         require("lspconfig")[lsp].setup({
           capabilities = capabilities,
-          -- on_attach = function(client)
-          --   print(
-          --     string.format(
-          --       "LSP %s iniciado com encoding: %s",
-          --       client.name,
-          --       client.server_capabilities.positionEncoding or "não definido"
-          --     )
-          --   )
-          -- end,
         })
       end
-      -- require("lspconfig").lua_ls.setup({})
-      -- require("lspconfig").biome.setup({})
-      -- require("lspconfig").vtsls.setup({})
-      -- require("lspconfig").tailwindcss.setup({})
-      -- require("lspconfig").ember.setup({})
       require("lspconfig").intelephense.setup({
         capabilities = capabilities,
         settings = {
@@ -49,8 +35,6 @@ return {
         filetypes = { "mql", "mq4", "mq5" },
         -- root_dir = lspconfig.util.root_pattern(".git"),
       })
-      -- require("lspconfig").basedpyright.setup({})
-      -- require("plugins.lspconfig.intelephense")
     end,
   },
   {
@@ -59,7 +43,7 @@ return {
     opts = {
       bind = true,
       handler_opts = {
-        -- border = "rounded",
+        border = "rounded",
       },
     },
     config = function(_, opts)

@@ -1,12 +1,27 @@
+-- if true then
+--   return {}
+-- end
 return {
   "nvimdev/lspsaga.nvim",
   enabled = true,
   lazy = false,
   keys = {
     { "<leader>l", "", desc = "Lsp" },
-    { "<leader>la", "<cmd>Lspsaga code_action<cr>", desc = "Code Action (LspSaga)" },
-    { "<Leader>lS", "<Cmd>Lspsaga outline<CR>", desc = "Symbols outline (LspSaga)" },
-    { "<Leader>lr", "<Cmd>Lspsaga rename<CR>", desc = "Rename current symbol (LspSaga)" },
+    {
+      "<leader>la",
+      "<cmd>Lspsaga code_action<cr>",
+      desc = "Code Action (LspSaga)",
+    },
+    {
+      "<Leader>lS",
+      "<Cmd>Lspsaga outline<CR>",
+      desc = "Symbols outline (LspSaga)",
+    },
+    {
+      "<Leader>lr",
+      "<Cmd>Lspsaga rename<CR>",
+      desc = "Rename current symbol (LspSaga)",
+    },
     {
       "<leader>lp",
       "<cmd>Lspsaga peek_definition<cr>",
@@ -40,10 +55,10 @@ return {
         diagnostic_only_current = true,
       },
       -- ui = {
-      --   code_action = "??",
+      --   code_action = "?",
       --   enable = true,
       --   sign = true,
-      --   virtual_text = true,
+      --   virtual_text = false,
       -- },
     })
   end,
