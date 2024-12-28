@@ -1,7 +1,12 @@
 return {
   "akinsho/toggleterm.nvim",
   version = "*",
-  config = true,
+  -- config = true,
+  init = function()
+    require("toggleterm").setup({
+      start_in_insert = true,
+    })
+  end,
   keys = {
     {
       "<leader>tt",
@@ -60,44 +65,21 @@ return {
             require("lualine").hide({ unhide = true })
           end,
         })
+
+        -- Se não encontrou nenhuma instância do ToggleTerm, cria uma nova tab e abre o terminal
+        -- vim.cmd("ToggleTerm direction=tab")
         local cwd = vim.fn.getcwd()
         local session = string.match(cwd, ".*/(.*)")
-        -- Defina o caminho do seu arquivo de configuração do tmux
-        local tmux_config = "~/.tmux-nvim.conf"
-        -- Defina o nome do socket
-        local socket_name = session
-
-        -- Verifica se a sessão existe
-        local handle = io.popen(
-          string.format(
-            "tmux -L %s list-sessions 2>/dev/null | grep '%s'",
-            socket_name,
-            session
-          )
-        )
+        local handle = io.popen("zellij list-sessions")
         local result = handle:read("*a")
-        handle:close()
-
-        if result ~= "" then
-          -- Se a sessão existe, anexa a ela
+        handle.close()
+        local exist = string.find(result, session) ~= nil
+        if exist then
           vim.cmd(
-            string.format(
-              'TermExec cmd="tmux -L %s -f %s attach-session -t %s" direction=tab',
-              socket_name,
-              tmux_config,
-              session
-            )
+            'TermExec cmd="zellij attach ' .. session .. '"  " direction=tab'
           )
         else
-          -- Se a sessão não existe, cria uma nova
-          vim.cmd(
-            string.format(
-              'TermExec cmd="tmux -L %s -f %s new-session -s %s" direction=tab',
-              socket_name,
-              tmux_config,
-              session
-            )
-          )
+          vim.cmd('TermExec cmd="zellij -s ' .. session .. '"  " direction=tab')
         end
       end,
       desc = "Toggle Terminal in a tab (focus existing or create new)",
