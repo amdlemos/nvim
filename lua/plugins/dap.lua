@@ -4,43 +4,6 @@ return {
   config = function()
     local dap = require("dap")
     -- PHP
-    -- dap.adapters.php = {
-    --   type = "executable",
-    --   command = "node",
-    --   args = { "/home/amdlemos/.config/vscode-php-debug/out/phpDebug.js" },
-    -- }
-
-    -- dap.configurations.php = {
-    --   {
-    --     name = "Listen for Xdebug Docker",
-    --     type = "php",
-    --     request = "launch",
-    --     port = 9003,
-    --     -- this is where your file is in the container
-    --     pathMappings = {
-    --       ["/var/www/html"] = "/home/amdlemos/github/slim/first",
-    --     },
-    --   },
-    --   {
-    --     name = "Listen for Xdebug",
-    --     type = "php",
-    --     request = "launch",
-    --     port = 9003,
-    --   },
-    -- }
-
-    -- Configuração básica do PHP
-    -- dap.configurations.php = {
-    --   {
-    --     type = "php",
-    --     request = "launch",
-    --     name = "Listen for Xdebug",
-    --     port = 9003,
-    --     pathMappings = {
-    --       ["/var/www/html"] = "${workspaceFolder}",
-    --     },
-    --   },
-    -- }
 
     -- Debug logger
     local function debug_config()
