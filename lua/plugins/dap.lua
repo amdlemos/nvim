@@ -1,3 +1,4 @@
+local icons = require("plugins.lib.icons")
 return {
   "mfussenegger/nvim-dap",
   enabled = true,
@@ -204,6 +205,19 @@ return {
     dap.configurations.javascriptreact = dap.configurations.javascript
     dap.configurations.typescriptreact = dap.configurations.javascript
     dap.configurations.typescript = dap.configurations.javascript
+
+    vim.fn.sign_define("DapBreakpoint", {
+      text = icons.ui.Bug,
+      texthl = "DiagnosticSignError",
+      linehl = "",
+      numhl = "",
+    })
+    vim.fn.sign_define("DapStopped", {
+      text = icons.ui.ArrowRight,
+      texthl = "DiagnosticSignWarn",
+      linehl = "Visual",
+      numhl = "DiagnosticWarn",
+    })
   end,
   keys = {
     {

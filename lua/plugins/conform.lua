@@ -6,10 +6,10 @@ return {
       log_level = vim.log.levels.DEBUG,
       formatters_by_ft = {
         lua = { "stylua" },
-        php = {
-          "easy-coding-standard",
-          -- stop_after_first = true,
-        },
+        -- php = {
+        --   "easy-coding-standard",
+        -- stop_after_first = true,
+        -- },
         json = { "prettier" },
       },
       formatters = {
