@@ -109,26 +109,3 @@ end
 
 -- Autocommand para aplicar os keymaps quando abrir um terminal
 vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
-
-local api = vim.api
--- Função para verificar se a tab atual contém um toggleterm
-local function is_current_tab_toggleterm()
-  local current_tab = api.nvim_get_current_tabpage()
-  for _, win in ipairs(api.nvim_tabpage_list_wins(current_tab)) do
-    local buf = api.nvim_win_get_buf(win)
-    local buf_type = api.nvim_buf_get_option(buf, "filetype")
-    if buf_type == "toggleterm" then
-      return true
-    end
-  end
-  return false
-end
-
--- Função para gerenciar a visibilidade da lualine
-local function manage_lualine()
-  if is_current_tab_toggleterm() then
-    require("lualine").hide()
-  else
-    require("lualine").hide({ unhide = true })
-  end
-end
