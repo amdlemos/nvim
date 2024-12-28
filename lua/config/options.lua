@@ -37,9 +37,11 @@ local options = {
 
   -- number columns
 
-  relativenumber = true, -- display relative line numbers
+  relativenumber = false, -- display relative line numbers
   number = true, -- display the current line number
   numberwidth = 4, -- the column width to display line numbers
+  signcolumn = "yes",
+  cmdheight = 0,
 
   -- text display
 
