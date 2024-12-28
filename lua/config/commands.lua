@@ -8,6 +8,21 @@ function Toggle_diagnostics()
     vim.diagnostic.enable()
   end
 end
+local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+
+for type, icon in pairs(signs) do
+  local hl = "DiagnosticSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+end
+
+-- Configuração geral dos diagnósticos
+vim.diagnostic.config({
+  virtual_text = false, -- Desabilita o texto virtual (opcional)
+  signs = true, -- Mostra os sinais na coluna lateral
+  underline = true,
+  severity_sort = true,
+  update_in_insert = false,
+})
 
 vim.keymap.set(
   "n",
@@ -45,10 +60,6 @@ vim.api.nvim_set_keymap(
   ":ToggleTheme<CR>",
   { noremap = true, silent = true }
 )
-
-vim.diagnostic.config({
-  virtual_text = false,
-})
 
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
@@ -121,4 +132,3 @@ local function manage_lualine()
     require("lualine").hide({ unhide = true })
   end
 end
--- vim.cmd([[hi NvimTreeNormal guibg=NONE ctermbg=NONE]])
