@@ -4,3 +4,5 @@
 db_ui/connections.json
 lazy-lock.json
 lazy-lock.json
+lua/plugins/lib
+lua/plugins/ui
